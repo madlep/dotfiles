@@ -1,0 +1,12 @@
+font-family = "Hack Nerd Font Mono"
+font-family-bold = "Hack Nerd Font Mono Bold"
+font-family-italic = "Hack Nerd Font Mono Italic"
+font-family-bold-italic = "Hack Nerd Font Mono Bold Italic"
+
+theme = One Dark Two
+title = ghostty
+
+macos-titlebar-style = transparent
+macos-titlebar-proxy-icon = hidden
+
+confirm-close-surface = false

@@ -1,0 +1,44 @@
+[alias]
+  br = branch -a
+  co = checkout
+  st = status
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset' --abbrev-commit
+[apply]
+  ignorewhitespace = change
+[color]
+  branch = auto
+  grep = auto
+  diff = auto
+  interactive = auto
+  status = auto
+[core]
+  whitespace = tab-in-indent,tabwidth=2
+  excludesFile = ~/.gitignore_global
+[user]
+  email = julian@juliandoherty.com
+  name = Julian Doherty
+	signingkey = /Users/julian/.ssh/id_ed25519.pub
+[github]
+  user = madlep
+[push]
+  default = simple
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+[init]
+  defaultBranch = main
+[include]
+  path = ~/.gitconfig.local
+[pull] 
+  rebase = true
+  ff = true
+[merge]
+  tool = nvimdiff
+  layout = "LOCAL,BASE,REMOTE / MERGED"
+
+[commit]
+	gpgsign = true
+[gpg]
+	format = ssh
