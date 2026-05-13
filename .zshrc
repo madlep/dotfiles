@@ -2,12 +2,15 @@
 # setup:
 ###
 # /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# chmod -R go-w "$(brew --prefix)/share"
 # git clone https://github.com/madlep/dotfiles.git ~/.dotfiles
 # brew install stow
 # cd ~/.dotfiles
 # stow .
 # cd ~
 # brew bundle
+# sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# mise install
 
 eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 
