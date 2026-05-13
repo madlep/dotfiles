@@ -65,8 +65,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 #
 # version manager
-# [[ -s `brew --prefix asdf`/asdf.sh ]] && . `brew --prefix asdf`/libexec/asdf.sh
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
+eval "$(mise activate zsh)"
 
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
@@ -74,8 +73,6 @@ if type brew &>/dev/null; then
   autoload -Uz compinit
   compinit
 fi
-
-export ASDF_GOLANG_MOD_VERSION_ENABLED=true
 
 source $ZSH/oh-my-zsh.sh
 #
