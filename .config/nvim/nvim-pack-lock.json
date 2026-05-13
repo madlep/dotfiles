@@ -28,6 +28,10 @@
       "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
+    "fzf": {
+      "rev": "263eb4732fc6268f9fb35cffb634903ea8e2a26b",
+      "src": "https://github.com/junegunn/fzf"
+    },
     "git-blame.nvim": {
       "rev": "5c536e2d4134d064aa3f41575280bc8a2a0e03d7",
       "src": "https://github.com/f-person/git-blame.nvim"

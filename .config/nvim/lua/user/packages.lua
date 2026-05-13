@@ -50,6 +50,13 @@ vim.api.nvim_create_autocmd("PackChanged", {
     callback = function(ev)
         local name, kind = ev.data.spec.name, ev.data.kind
 
+        if name == "fzf" and (kind == "install" or kind == "update") then
+            if not ev.data.active then
+                vim.cmd.packadd("fzf")
+            end
+            vim.fn["fzf#install"]()
+        end
+
         if name == "telescope-fzf-native.nvim" and (kind == "install" or kind == "update") then
             vim.system(
                 {
@@ -58,9 +65,10 @@ vim.api.nvim_create_autocmd("PackChanged", {
         end
     end
 })
+vim.pack.add { "https://github.com/junegunn/fzf" }
+vim.pack.add { "https://github.com/nvim-telescope/telescope-fzf-native.nvim" }
 vim.pack.add {
     "https://github.com/nvim-telescope/telescope.nvim",
-    "https://github.com/nvim-telescope/telescope-fzf-native.nvim",
     "https://github.com/princejoogie/dir-telescope.nvim",
     "https://github.com/ThePrimeagen/harpoon"
 }
@@ -108,10 +116,8 @@ vim.api.nvim_create_autocmd("PackChanged", {
         end
     end
 })
-vim.pack.add {
-    "https://github.com/saghen/blink.cmp",
-    "https://github.com/saghen/blink.lib",
-}
+vim.pack.add { "https://github.com/saghen/blink.lib" }
+vim.pack.add { "https://github.com/saghen/blink.cmp" }
 require("blink-cmp").setup({})
 
 -- completion snippets
