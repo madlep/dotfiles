@@ -1,3 +1,16 @@
+###
+# setup:
+###
+# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# git clone https://github.com/madlep/dotfiles.git ~/.dotfiles
+# brew install stow
+# cd ~/.dotfiles
+# stow .
+# cd ~
+# brew bundle
+
+eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
 # powerlevel 10k font
@@ -56,9 +69,6 @@ plugins=(git sudo vi-mode mix)
 
 # User configuration
 
-#export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
-eval "$(/opt/homebrew/bin/brew shellenv)"
-# export MANPATH="/usr/local/man:$MANPATH"
 export PATH="$HOME/.mix:$PATH"
 export PATH="$HOME/.mix/escripts:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
