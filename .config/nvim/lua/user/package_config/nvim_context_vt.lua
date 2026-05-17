@@ -1,7 +1,11 @@
-require("nvim_context_vt").setup({
-    prefix = " ",
-    disable_virtual_lines_ft = { "yaml" },
-})
+return {
+    setup = function(_)
+        require("nvim_context_vt").setup({
+            prefix = " ",
+            disable_virtual_lines_ft = { "yaml" },
+        })
+    end
+}
 
 -- local config = require('nvim_context_vt.config')
 -- table.insert(config.targets, "anonymous_function")

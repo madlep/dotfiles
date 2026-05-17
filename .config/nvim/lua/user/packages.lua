@@ -1,139 +1,240 @@
--- useful lua functions used by everything
-vim.pack.add { "https://github.com/nvim-lua/plenary.nvim" }
+local packages = {
+    -- useful lua functions used by everything
+    "https://github.com/nvim-lua/plenary.nvim",
 
--- make buffer/window management less janky
-vim.pack.add { "https://github.com/moll/vim-bbye" }
+    -- make buffer/window management less janky
+    "https://github.com/moll/vim-bbye",
 
--- key binding helpers
-vim.pack.add { "https://github.com/folke/which-key.nvim" }
-require("which-key").setup({})
+    -- add/delete surrounding ({[]}) etc
+    "https://github.com/machakann/vim-sandwich",
 
--- better quick fix
--- vim.pack.add { "https://github.com/kevinhwang91/nvim-bqf" }
-vim.pack.add({ { src = "https://github.com/madlep/nvim-bqf", version = "native-treesitter-preview-fallback" } })
-require("bqf").setup({})
+    -- theme
+    "https://github.com/navarasu/onedark.nvim",
 
--- add/delete surrounding ({[]}) etc
-vim.pack.add { "https://github.com/machakann/vim-sandwich" }
+    -- tree sitter folding
+    "https://github.com/OXY2DEV/foldtext.nvim",
 
--- code/test alternate file switching
-vim.pack.add { "https://github.com/rgroli/other.nvim" }
-require("user.package_config.other")
+    -- better quick fix
+    {
+        src = "https://github.com/madlep/nvim-bqf",
+        version = "native-treesitter-preview-fallback",
+        data = { setup = "bqf" }
+    },
 
--- use <C-h><C-j> etc to move between tmux windows and neovim
-vim.pack.add { "https://github.com/alexghergh/nvim-tmux-navigation" }
-require("user.package_config.nvim-tmux-navigation")
+    -- key binding helpers
+    {
+        src = "https://github.com/folke/which-key.nvim",
+        data = { setup = "which-key" }
+    },
 
--- nicer buffer list at top
-vim.pack.add { "https://github.com/akinsho/bufferline.nvim" }
-require("user.package_config.bufferline")
+    -- code/test alternate file switching
+    {
+        src = "https://github.com/rgroli/other.nvim",
+        data = { setup = "user.package_config.other" }
+    },
 
--- nicer line at bottom of the screen
-vim.pack.add { "https://github.com/nvim-lualine/lualine.nvim" }
-require("user.package_config.lualine")
+    -- use <C-h><C-j> etc to move between tmux windows and neovim
+    {
+        src = "https://github.com/alexghergh/nvim-tmux-navigation",
+        data = { setup = "user.package_config.nvim-tmux-navigation" }
+    },
 
--- show vertical tab markers for indentation level
-vim.pack.add { "https://github.com/lukas-reineke/indent-blankline.nvim", "https://github.com/andersevenrud/nvim_context_vt" }
-require("user.package_config.indent-blankline")
-require("user.package_config.nvim_context_vt")
+    -- nicer buffer list at top
+    {
+        src = "https://github.com/akinsho/bufferline.nvim",
+        data = { setup = "user.package_config.bufferline" }
+    },
 
--- report workspace wide diagnostics/warnings/errors
-vim.pack.add {
-    "https://github.com/folke/trouble.nvim",
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim"
-}
-require("user.package_config.trouble")
-require("lsp_lines").setup({})
+    -- nicer line at bottom of the screen
+    {
+        src = "https://github.com/nvim-lualine/lualine.nvim",
+        data = { setup = "user.package_config.lualine" }
+    },
 
--- telescope UI
-vim.api.nvim_create_autocmd("PackChanged", {
-    callback = function(ev)
-        local name, kind = ev.data.spec.name, ev.data.kind
+    -- show vertical tab markers for indentation level
+    {
+        src = "https://github.com/lukas-reineke/indent-blankline.nvim",
+        data = { setup = "user.package_config.indent-blankline" }
+    },
 
-        if name == "fzf" and (kind == "install" or kind == "update") then
-            if not ev.data.active then
-                vim.cmd.packadd("fzf")
+    -- show context at end of blocks
+    {
+        src = "https://github.com/andersevenrud/nvim_context_vt",
+        data = { setup = "user.package_config.nvim_context_vt" }
+    },
+
+    -- diagnostics management
+    {
+        src = "https://github.com/folke/trouble.nvim",
+        data = { setup = "user.package_config.trouble" }
+    },
+
+    -- show diagnostics inline
+    {
+        src = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        data = { setup = "lsp_lines" }
+    },
+
+    -- fuzzy finder binary used by telescope
+    {
+        src = "https://github.com/junegunn/fzf",
+        data = { build = function(_) vim.fn["fzf#install"]() end }
+    },
+
+    -- telescope extension to use fzf
+    {
+        src = "https://github.com/nvim-telescope/telescope-fzf-native.nvim",
+        data = {
+            build = function(ev)
+                vim.system({ "make" }, { cwd = ev.data.path, text = true }):wait(60000)
             end
-            vim.fn["fzf#install"]()
-        end
+        }
+    },
 
-        if name == "telescope-fzf-native.nvim" and (kind == "install" or kind == "update") then
-            vim.system(
-                {
-                    "make" },
-                { cwd = ev.data.path })
-        end
-    end
-})
-vim.pack.add { "https://github.com/junegunn/fzf" }
-vim.pack.add { "https://github.com/nvim-telescope/telescope-fzf-native.nvim" }
-vim.pack.add {
-    "https://github.com/nvim-telescope/telescope.nvim",
-    "https://github.com/princejoogie/dir-telescope.nvim",
-    "https://github.com/ThePrimeagen/harpoon"
-}
-require("user.package_config.telescope")
-require("dir-telescope").setup({})
-require("harpoon").setup({})
+    -- telescope finder UI
+    {
+        src = "https://github.com/nvim-telescope/telescope.nvim",
+        data = { setup = "user.package_config.telescope" }
+    },
 
--- highlight word under cursor throughout doc
-vim.pack.add { "https://github.com/rrethy/vim-illuminate" }
-require("illuminate").configure({})
+    -- scope telescope file finders to specfic directories
+    {
+        src = "https://github.com/princejoogie/dir-telescope.nvim",
+        data = { setup = "dir-telescope" }
+    },
 
--- flash cursor line on movements
-vim.pack.add { "https://github.com/DanilaMihailov/beacon.nvim" }
-require("beacon").setup({})
+    -- mark working files and jump between them quickly
+    {
+        src = "https://github.com/ThePrimeagen/harpoon",
+        data = { setup = "harpoon" }
+    },
 
--- show change status in left margin
-vim.pack.add { "https://github.com/lewis6991/gitsigns.nvim" }
-require("gitsigns").setup({})
+    -- highlight word under cursor throughout doc
+    {
+        src = "https://github.com/rrethy/vim-illuminate",
+        data = { setup = "user.package_config.illuminate" }
+    },
 
--- show gitblame
-vim.pack.add { "https://github.com/f-person/git-blame.nvim" }
-require("gitblame").setup({})
+    -- flash cursor line on movements
+    {
+        src = "https://github.com/DanilaMihailov/beacon.nvim",
+        data = { setup = "beacon" }
+    },
 
--- icons
-vim.pack.add { "https://github.com/nvim-tree/nvim-web-devicons" }
-require("nvim-web-devicons").setup({})
+    -- show git status in left margin
+    {
+        src = "https://github.com/lewis6991/gitsigns.nvim",
+        data = { setup = "gitsigns" }
+    },
 
-vim.pack.add { "https://github.com/nvim-mini/mini.icons" }
-require("mini.icons").setup({})
+    -- show gitblame as virtual text
+    {
+        src = "https://github.com/f-person/git-blame.nvim",
+        data = { setup = "gitblame" }
+    },
 
--- directory tree
-vim.pack.add { "https://github.com/nvim-tree/nvim-tree.lua" }
-require("user.package_config.nvim-tree")
+    -- icons
+    {
+        src = "https://github.com/nvim-tree/nvim-web-devicons",
+        data = { setup = "nvim-web-devicons" }
+    },
 
--- completion
-vim.api.nvim_create_autocmd("PackChanged", {
-    callback = function(ev)
-        local name, kind = ev.data.spec.name, ev.data.kind
+    -- more icons
+    {
+        src = "https://github.com/nvim-mini/mini.icons",
+        data = { setup = "mini.icons" }
+    },
 
-        if name == "blink.cmp" and (kind == "install" or kind == "update") then
-            if not ev.data.active then
-                vim.cmd.packadd("blink.cmp")
-            end
-            require('blink-cmp').build():wait(60000)
-        end
-    end
-})
-vim.pack.add { "https://github.com/saghen/blink.lib" }
-vim.pack.add { "https://github.com/saghen/blink.cmp" }
-require("blink-cmp").setup({})
+    -- file navigation tree
+    {
+        src = "https://github.com/nvim-tree/nvim-tree.lua",
+        data = { setup = "user.package_config.nvim-tree" }
+    },
 
--- completion snippets
-vim.pack.add { "https://github.com/rafamadriz/friendly-snippets" }
+    -- completion library. used to install rust completion binary
+    "https://github.com/saghen/blink.lib",
 
--- treesitter
-vim.pack.add { "https://github.com/romus204/tree-sitter-manager.nvim" }
-require("tree-sitter-manager").setup({})
+    -- completion
+    {
+        src = "https://github.com/saghen/blink.cmp",
+        data = {
+            build = function(_)
+                require("blink.cmp").build():wait(60000)
+            end,
+            setup = "blink.cmp"
+        }
+    },
 
--- lsp
-vim.pack.add {
+    -- snippets for completion
+    "https://github.com/rafamadriz/friendly-snippets",
+
+    -- manage and install treesitter parsers
+    {
+        src = "https://github.com/romus204/tree-sitter-manager.nvim",
+        data = { setup = "tree-sitter-manager" }
+    },
+
+    -- configure LSP servers
     "https://github.com/neovim/nvim-lspconfig",
-    "https://github.com/mason-org/mason.nvim",
-    "https://github.com/mason-org/mason-lspconfig.nvim",
-    "https://github.com/onsails/lspkind.nvim"
+
+    -- install LSP servers
+    {
+        src = "https://github.com/mason-org/mason.nvim",
+        data = { setup = "mason" }
+    },
+
+    -- connect installed servers
+    {
+        src = "https://github.com/mason-org/mason-lspconfig.nvim",
+        data = { setup = "mason-lspconfig" }
+    },
+
+    -- pretty icons for LSP UIs
+    {
+        src = "https://github.com/onsails/lspkind.nvim",
+        data = { setup = "lspkind" }
+    },
 }
-require("mason").setup({})
-require("mason-lspconfig").setup()
-require("lspkind").setup()
+
+local function package_name(spec)
+    spec = type(spec) == 'string' and { src = spec } or spec
+    local name = spec.name or spec.src:gsub('%.git$', '')
+    return (type(name) == 'string' and name or ''):match('[^/]+$') or ''
+end
+
+-- vim.pack.del(vim.iter(vim.pack.get()):map(function(x) return x.spec.name end):totable(), {force = true})
+
+-- #1 set up build hooks
+local package_builds = {}
+vim.api.nvim_create_autocmd("PackChanged", {
+    callback = function(ev)
+        for _, package in ipairs(packages) do
+            local name = package_name(package)
+            if ev.data.spec.name == name and (ev.data.kind == "install" or ev.data.kind == "update") then
+                if type(package) == "table" and type(package.data) == "table" and type(package.data.build) == "function" then
+                    table.insert(package_builds, { fn = package.data.build, ev = ev, name = name })
+                end
+            end
+        end
+    end
+})
+
+-- #2 add packages
+vim.pack.add(packages)
+
+for _, package_build in ipairs(package_builds) do
+    if not package_build.ev.data.active then
+        vim.cmd.packadd(package_build.name)
+    end
+    package_build.fn(package_build.ev)
+end
+
+-- #3 setup
+for _, package in ipairs(packages) do
+    if type(package) == "table" and type(package.data) == "table" and package.data.setup ~= nil then
+        local setup_type = type(package.data.setup)
+        if setup_type == "string" then
+            require(package.data.setup).setup({})
+        end
+    end
+end

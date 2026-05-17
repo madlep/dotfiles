@@ -1,16 +1,20 @@
-require("other-nvim").setup({
-    mappings = {
-        "angular",
-        "c",
-        "rails",
-        "golang",
-        "laravel",
-        "livewire",
-        "python",
-        "react",
-        "rust",
-        "elixir",
-        "clojure",
-    },
-    showMissingFiles = true,
-})
+return {
+    setup = function(_)
+        require("other-nvim").setup({
+            mappings = {
+                "angular",
+                "c",
+                "rails",
+                "golang",
+                "laravel",
+                "livewire",
+                "python",
+                "react",
+                "rust",
+                "elixir",
+                "clojure",
+            },
+            showMissingFiles = true,
+        })
+    end
+}
