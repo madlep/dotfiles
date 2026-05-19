@@ -226,7 +226,9 @@ for _, package_build in ipairs(package_builds) do
     if not package_build.ev.data.active then
         vim.cmd.packadd(package_build.name)
     end
+    print("starting plugin build for " .. package_build.ev.data.spec.name)
     package_build.fn(package_build.ev)
+    print("finished plugin build for " .. package_build.ev.data.spec.name)
 end
 
 -- #3 setup

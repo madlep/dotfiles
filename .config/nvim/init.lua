@@ -2,9 +2,6 @@ vim.loader.enable()
 
 require("user.options")
 
--- user/plugins.rb will load everything in user/plugin_config/*.lua
-require("user.plugins")
-
 -- migrate from packer -> vim.pack
 require("user.packages")
 
