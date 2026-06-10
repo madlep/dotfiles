@@ -117,6 +117,10 @@
       "rev": "7d324792b7943e4aa16ad007212e6acc6f9fe335",
       "src": "https://github.com/nvim-telescope/telescope.nvim"
     },
+    "tokyonight.nvim": {
+      "rev": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6",
+      "src": "https://github.com/folke/tokyonight.nvim"
+    },
     "tree-sitter-manager.nvim": {
       "rev": "f18e545c6ccbbae9875e63a2a7b8e8a9678a242e",
       "src": "https://github.com/romus204/tree-sitter-manager.nvim"

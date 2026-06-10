@@ -10,6 +10,7 @@ local packages = {
 
     -- theme
     "https://github.com/navarasu/onedark.nvim",
+    "https://github.com/folke/tokyonight.nvim",
 
     -- tree sitter folding
     "https://github.com/OXY2DEV/foldtext.nvim",
