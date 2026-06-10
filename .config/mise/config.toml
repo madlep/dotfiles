@@ -1,6 +1,6 @@
 [tools]
 neovim = '0.12.2'
-erlang  = '28.4.1'
-elixir = '1.19.5-otp-28'
+erlang  = "29.0.1"
+elixir = "1.20.0-otp-29"
 rust = '1.95.0'
 rebar = { version = "latest", asset_pattern = "rebar3" }
