@@ -160,7 +160,7 @@ local packages = {
         src = "https://github.com/saghen/blink.cmp",
         data = {
             build = function(_)
-                require("blink.cmp").build():wait(60000)
+                require("blink.cmp").build():pwait(60000)
             end,
             setup = "blink.cmp"
         }
