@@ -166,3 +166,13 @@ wk.add({ { "<leader>n", group = "notes" },
 
 }
 )
+
+yank = require("user.yank")
+-- yank
+wk.add({ { "<leader>y", group = "yank" },
+    { "<leader>yy", yank.yank_file_line, desc = "yank relative file:line" },
+    { "<leader>yf", yank.yank_file, desc = "yank relative file" },
+    { "<leader>yY", yank.yank_absolute_file_line, desc = "yank absolute file:line" },
+    { "<leader>yF", yank.yank_absolute_file, desc = "yank absolute file" },
+    { "<leader>yo", yank.open, desc = "open file:path from system clipboard" },
+})
