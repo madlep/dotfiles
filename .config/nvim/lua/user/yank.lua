@@ -29,17 +29,29 @@ M.yank_absolute_file = function()
 end
 
 M.open = function()
-    maybe_file_line = vim.fn.getreg("+")
-    file, line = maybe_file_line:match("^(.-):(%d+)$")
+    maybe_file_line = vim.trim(vim.fn.getreg("+") or "")
+
+    local file, line, col
+
+    -- try file:line:col
+    file, line, col = maybe_file_line:match("^(.-):(%d+):(%d+):?")
+
+    -- try file:line
+    if not file then
+        file, line = maybe_file_line:match("^(.-):(%d+):?")
+    end
+
     if file then
-        vim.print(file)
-        local bufnr = vim.fn.bufadd(file)
-        vim.fn.bufload(bufnr)
-        vim.api.nvim_set_current_buf(bufnr)
+        if vim.fn.filereadable(file) == 0 then return false end
+
+        vim.cmd.edit(file)
+
         if line then
             line_int = math.floor(tonumber(line) or 0)
-            vim.api.nvim_win_set_cursor(0, {line_int, 0})
+            col_int = math.floor(tonumber(col) or 0)
+            vim.api.nvim_win_set_cursor(0, {line_int, col_int})
         end
+
         vim.print("opened " .. maybe_file_line)
     else
         vim.print("don't know how to open " .. maybe_file_line)
