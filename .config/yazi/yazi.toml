@@ -1,3 +1,9 @@
 [preview]
 max_width = 4000
 max_height = 4000
+
+[opener]
+edit = [
+  { run = 'tmux display-popup -E -w 80% -h 80% nvim "$@"', desc = 'neovim popup' },
+  { run = 'tmux new-window -n "$(basename $@)" nvim "$@"', orphan = true, desc = "neovim new window", for = "unix" }
+]
