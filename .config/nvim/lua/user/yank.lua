@@ -41,21 +41,25 @@ M.open = function()
         file, line = maybe_file_line:match("^(.-):(%d+):?")
     end
 
-    if file then
-        if vim.fn.filereadable(file) == 0 then return false end
-
-        vim.cmd.edit(file)
-
-        if line then
-            line_int = math.floor(tonumber(line) or 0)
-            col_int = math.floor(tonumber(col) or 0)
-            vim.api.nvim_win_set_cursor(0, {line_int, col_int})
-        end
-
-        vim.print("opened " .. maybe_file_line)
-    else
-        vim.print("don't know how to open " .. maybe_file_line)
+    -- otherwise, just use input as file
+    if not file then
+        file = maybe_file_line
     end
+
+    if vim.fn.filereadable(file) == 0 then
+        vim.print("can't open " .. file)
+        return false
+    end
+
+    vim.cmd.edit(file)
+
+    if line then
+        line_int = math.floor(tonumber(line) or 0)
+        col_int = math.floor(tonumber(col) or 0)
+        vim.api.nvim_win_set_cursor(0, {line_int, col_int})
+    end
+
+    vim.print("opened " .. maybe_file_line)
 end
 
 return M
