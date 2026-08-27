@@ -176,3 +176,11 @@ wk.add({ { "<leader>y", group = "yank" },
     { "<leader>yF", yank.yank_absolute_file, desc = "yank absolute file" },
     { "<leader>yo", yank.open, desc = "open file:path from system clipboard" },
 })
+
+preview = require("user.preview")
+-- preview
+wk.add({ { "<leader>p", group = "preview", mode = {"n", "v"} },
+    { "<leader>px", preview.xml_preview_buffer, desc = "preview XML full buffer", mode = "n"},
+    -- use user_command rather than function call so we can set `{ range = true }` and not have to mess with figuring out markers
+    { "<leader>px", "<cmd>XmlPreviewSelection<CR>", desc = "preview XML visual", mode = "v"},
+})
