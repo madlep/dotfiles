@@ -1,3 +1,6 @@
+[mgr]
+sort_by = "alphabetical"
+
 [opener]
 edit = [
   { run = 'tmux display-popup -E -w 80% -h 80% nvim "$@"', desc = 'neovim popup' },
